@@ -1111,6 +1111,130 @@
     letter-spacing: 1px;
   }
 
+  /* ===== TRACKING CARD CLICKABLE ===== */
+  .tracking-card-clickable {
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1) !important;
+  }
+  .tracking-card-clickable:hover {
+    transform: translateY(-8px) scale(1.02) !important;
+    border-color: rgba(201,168,76,0.4) !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(201,168,76,0.1) !important;
+  }
+
+  /* ===== TRACKING FULLPAGE OVERLAY ===== */
+  #tracking-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(10,10,15,0.96);
+    backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  #tracking-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .tracking-overlay-content {
+    text-align: center;
+    position: relative;
+    max-width: 500px;
+    padding: 20px;
+    transform: scale(0.85);
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  #tracking-overlay.active .tracking-overlay-content {
+    transform: scale(1);
+  }
+  .tracking-overlay-close {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--white2);
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .tracking-overlay-close:hover { background: rgba(255,255,255,0.14); color: var(--white); }
+  .tracking-overlay-emoji {
+    font-size: 5rem;
+    display: block;
+    margin-bottom: 24px;
+    filter: drop-shadow(0 0 30px rgba(201,168,76,0.4));
+    animation: float 3s ease-in-out infinite;
+  }
+  .tracking-overlay-ring {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    border: 2px solid rgba(201,168,76,0.25);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px;
+    position: relative;
+  }
+  .tracking-overlay-ring::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.1);
+    animation: spin-ring 8s linear infinite;
+  }
+  .tracking-overlay-ring::after {
+    content: '';
+    position: absolute;
+    inset: -16px;
+    border-radius: 50%;
+    border: 1px dashed rgba(201,168,76,0.07);
+    animation: spin-ring 12s linear infinite reverse;
+  }
+  @keyframes spin-ring {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .tracking-overlay-title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .tracking-overlay-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold-light);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 10px 28px;
+    border-radius: 50px;
+    margin-bottom: 28px;
+    letter-spacing: 2px;
+  }
+  .tracking-overlay-badge .dot {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  .tracking-overlay-desc {
+    color: var(--white2);
+    opacity: 0.6;
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
   /* ===== SCROLL REVEAL ===== */
   .reveal {
     opacity: 0;
@@ -1161,6 +1285,45 @@
     0% { transform: translateY(0) rotate(0deg); opacity: 0.03; }
     50% { opacity: 0.06; }
     100% { transform: translateY(-100px) rotate(10deg); opacity: 0; }
+  }
+
+  /* ===== CUSTOM CURSOR (desktop only) ===== */
+  @media (pointer: fine) {
+  body { cursor: none; }
+  a, button, [onclick], .course-card, .tracking-card-clickable, label, select, input, textarea { cursor: none !important; }
+  }
+
+  #custom-cursor-dot {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s ease, background 0.2s, width 0.2s, height 0.2s;
+    box-shadow: 0 0 10px rgba(201,168,76,0.8), 0 0 20px rgba(201,168,76,0.4);
+  }
+
+  #custom-cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1.5px solid rgba(201,168,76,0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, width 0.25s ease, height 0.25s ease, border-color 0.2s, opacity 0.2s;
+  }
+
+  body.cursor-pointer #custom-cursor-dot {
+    width: 12px; height: 12px;
+    background: var(--gold-light);
+    box-shadow: 0 0 16px rgba(201,168,76,1), 0 0 30px rgba(201,168,76,0.5);
+  }
+  body.cursor-pointer #custom-cursor-ring {
+    width: 44px; height: 44px;
+    border-color: rgba(201,168,76,0.9);
   }
 
   /* ===== CURSOR GLOW ===== */
@@ -3071,6 +3234,8 @@
 
 <!-- Cursor Glow -->
 <div id="cursor-glow"></div>
+<div id="custom-cursor-dot"></div>
+<div id="custom-cursor-ring"></div>
 
 <!-- Scroll to Top -->
 <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -3080,7 +3245,7 @@
 
 <!-- Nav -->
 <nav id="navbar">
-  <div class="nav-logo">الفارس ♞</div>
+  <div class="nav-logo" id="navSecretLogo" onclick="handleNavLogoClick()" style="cursor:default; user-select:none;">الفارس ♞</div>
 
   <!-- Mobile: auth buttons always visible + hamburger -->
   <div class="nav-mobile-right">
@@ -3098,8 +3263,8 @@
     <li><a href="#contact" class="nav-cta">سجّل دلوقتي</a></li>
 
   </ul>
-  <!-- Admin Trigger -->
-  <button class="admin-trigger-btn" id="adminTriggerBtn" title="لوحة التحكم" onclick="openAdminLogin()" style="margin-right:8px;">⚙️</button>
+  <!-- Admin Trigger (hidden - secret activation) -->
+  <button class="admin-trigger-btn" id="adminTriggerBtn" title="لوحة التحكم" onclick="openAdminLogin()" style="margin-right:8px; display:none;">⚙️</button>
 </nav>
 
 <!-- HERO -->
@@ -3129,7 +3294,7 @@
         <span class="stat-label">طالب مستفيد</span>
       </div>
       <div class="stat">
-        <span class="stat-num" data-target="10" data-prefix="+">+10</span>
+        <span class="stat-num" data-target="20" data-prefix="+">+20</span>
         <span class="stat-label">سنوات خبرة</span>
       </div>
       <div class="stat">
@@ -3247,8 +3412,8 @@
 <!-- HEART MESSAGES -->
 <section id="heart-messages" style="padding: 80px 40px; position:relative; z-index:1;">
   <div class="section-header reveal">
-    <div class="section-tag">من القلب 🫶</div>
-    <h2 class="section-title">رسائل من القلب 🫶</h2>
+    <div class="section-tag">من القلب ❤️</div>
+    <h2 class="section-title">رسائل من القلب ❤️</h2>
     <div class="section-line"></div>
     <p style="color:var(--white2); opacity:0.7; margin-top:16px; font-size:1rem; max-width:500px; margin-inline:auto; line-height:1.8;">كلام من القلب لكل طالب في رحلته</p>
   </div>
@@ -3545,7 +3710,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-logo">
+    <div class="footer-logo" id="footerSecretLogo" onclick="handleFooterLogoClick()" style="cursor:default; user-select:none;">
       الفارس ♞
       <span>محمد جمعة | رياضيات</span>
     </div>
@@ -3657,10 +3822,42 @@
 
   // ===== CURSOR GLOW =====
   const cursorGlow = document.getElementById('cursor-glow');
-  document.addEventListener('mousemove', (e) => {
-    cursorGlow.style.left = e.clientX + 'px';
-    cursorGlow.style.top = e.clientY + 'px';
-  });
+  const cursorDot  = document.getElementById('custom-cursor-dot');
+  const cursorRing = document.getElementById('custom-cursor-ring');
+  let ringX = 0, ringY = 0, dotX = 0, dotY = 0;
+
+  // Only activate on non-touch devices
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', (e) => {
+      dotX = e.clientX; dotY = e.clientY;
+      cursorDot.style.left  = dotX + 'px';
+      cursorDot.style.top   = dotY + 'px';
+      cursorGlow.style.left = dotX + 'px';
+      cursorGlow.style.top  = dotY + 'px';
+    });
+
+    (function animateRing() {
+      ringX += (dotX - ringX) * 0.12;
+      ringY += (dotY - ringY) * 0.12;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top  = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    })();
+
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, [onclick], .course-card, .tracking-card-clickable, label, select, input, textarea')) {
+        document.body.classList.add('cursor-pointer');
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('a, button, [onclick], .course-card, .tracking-card-clickable, label, select, input, textarea')) {
+        document.body.classList.remove('cursor-pointer');
+      }
+    });
+  } else {
+    cursorDot.style.display  = 'none';
+    cursorRing.style.display = 'none';
+  }
 
   // ===== RIPPLE EFFECT ON BUTTONS =====
   document.querySelectorAll('.btn-primary, .btn-secondary, .btn-enroll, .btn-submit, .nav-cta').forEach(btn => {
@@ -4839,8 +5036,8 @@ function renderTrackingSection() {
   const cards = adminTracking;
   const container = document.getElementById('tracking-cards-container');
   if (!container) return;
-  container.innerHTML = cards.map(c => `
-    <div class="reveal" style="background:var(--dark3);border:1px solid rgba(201,168,76,0.15);border-radius:20px;padding:32px 24px;text-align:center;position:relative;overflow:hidden;">
+  container.innerHTML = cards.map((c, i) => `
+    <div class="reveal tracking-card-clickable" onclick="openTrackingOverlay(${i})" style="background:var(--dark3);border:1px solid rgba(201,168,76,0.15);border-radius:20px;padding:32px 24px;text-align:center;position:relative;overflow:hidden;">
       <div style="font-size:2.2rem;margin-bottom:14px;">${escHtml(c.emoji)}</div>
       <strong style="display:block;font-size:1rem;color:var(--white);margin-bottom:8px;">${escHtml(c.title)}</strong>
       <span style="font-size:0.8rem;color:var(--white2);opacity:0.6;">${escHtml(c.desc)}</span>
@@ -4921,6 +5118,51 @@ document.addEventListener('keydown', e => {
 // Initialize admin data on page load
 adminLoadFromStorage();
 
+// ===== SECRET ADMIN TRIGGER =====
+// Step 1: Double-click on nav logo "الفارس ♞"
+// Step 2: Triple-click on footer logo "الفارس ♞"
+(function() {
+  let secretStep = 0;
+  let stepTimer = null;
+
+  let navClicks = 0;
+  let navTimer = null;
+
+  let footerClicks = 0;
+  let footerTimer = null;
+
+  window.handleNavLogoClick = function() {
+    navClicks++;
+    clearTimeout(navTimer);
+    navTimer = setTimeout(() => { navClicks = 0; }, 500);
+
+    if (navClicks === 2) {
+      navClicks = 0;
+      clearTimeout(navTimer);
+      // Activate step 1 — wait for footer triple-click within 8 seconds
+      secretStep = 1;
+      clearTimeout(stepTimer);
+      stepTimer = setTimeout(() => { secretStep = 0; }, 8000);
+    }
+  };
+
+  window.handleFooterLogoClick = function() {
+    if (secretStep !== 1) return;
+
+    footerClicks++;
+    clearTimeout(footerTimer);
+    footerTimer = setTimeout(() => { footerClicks = 0; }, 500);
+
+    if (footerClicks === 3) {
+      footerClicks = 0;
+      clearTimeout(footerTimer);
+      secretStep = 0;
+      clearTimeout(stepTimer);
+      openAdminLogin();
+    }
+  };
+})();
+
 
 </script>
 
@@ -4962,7 +5204,7 @@ adminLoadFromStorage();
         <span class="admin-tab-icon">📄</span><span>المذكرات</span>
       </button>
       <button class="admin-tab-btn" onclick="switchAdminTab('heart', this)">
-        <span class="admin-tab-icon">🫶</span><span>رسائل من القلب</span>
+        <span class="admin-tab-icon">❤️</span><span>رسائل من القلب</span>
       </button>
       <button class="admin-tab-btn" onclick="switchAdminTab('tracking', this)">
         <span class="admin-tab-icon">📊</span><span>متابعة الطلاب</span>
@@ -5088,7 +5330,7 @@ adminLoadFromStorage();
 
       <!-- ===== HEART MESSAGES TAB ===== -->
       <div class="admin-section" id="admin-heart">
-        <div class="admin-section-title">🫶 إدارة رسائل من القلب</div>
+        <div class="admin-section-title">❤️ إدارة رسائل من القلب</div>
         <p style="font-size:0.85rem; color:var(--white2); opacity:0.6; margin-bottom:20px;">أضف أو احذف بطاقات الرسائل من القلب اللي بتظهر في الموقع.</p>
         <div class="admin-heart-list" id="admin-heart-list"></div>
         <div class="admin-add-form">
@@ -5112,6 +5354,47 @@ adminLoadFromStorage();
 
 <!-- Toast Notification -->
 <div class="admin-save-toast" id="adminToast">✅ تم الحفظ بنجاح!</div>
+
+
+<!-- ===== TRACKING FULLPAGE OVERLAY ===== -->
+<div id="tracking-overlay" onclick="closeTrackingOverlay(event)">
+  <div class="tracking-overlay-content">
+    <button class="tracking-overlay-close" onclick="closeTrackingOverlay()">✕</button>
+    <div class="tracking-overlay-ring">
+      <span class="tracking-overlay-emoji" id="overlay-emoji">⏰</span>
+    </div>
+    <div class="tracking-overlay-title" id="overlay-title">مواعيد الحصص</div>
+    <div class="tracking-overlay-badge">
+      <span class="dot"></span>
+      قريباً
+    </div>
+    <p class="tracking-overlay-desc" id="overlay-desc"></p>
+  </div>
+</div>
+
+<script>
+function openTrackingOverlay(index) {
+  var cards = typeof adminTracking !== "undefined" ? adminTracking : [];
+  var card = cards[index];
+  if (!card) return;
+  document.getElementById("overlay-emoji").textContent = card.emoji;
+  document.getElementById("overlay-title").textContent = card.title;
+  document.getElementById("overlay-desc").innerHTML = card.desc + "<br><br>جاري العمل على هذا القسم<br>سيكون متاحاً قريباً إن شاء الله ✨";
+  document.getElementById("tracking-overlay").classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+function closeTrackingOverlay(e) {
+  if (e && e.target !== document.getElementById("tracking-overlay") && !e.target.classList.contains("tracking-overlay-close")) return;
+  document.getElementById("tracking-overlay").classList.remove("active");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
+    document.getElementById("tracking-overlay").classList.remove("active");
+    document.body.style.overflow = "";
+  }
+});
+</script>
 
 </body>
 </html>
