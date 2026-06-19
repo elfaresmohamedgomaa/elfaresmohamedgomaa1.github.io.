@@ -3798,6 +3798,29 @@
 
 </style>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyD0LiDrxrn6pvSitZNI1Tc5iDPfx0yKDpg",
+  authDomain: "math-teacher-67c9c.firebaseapp.com",
+  databaseURL: "https://math-teacher-67c9c-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "math-teacher-67c9c",
+  storageBucket: "math-teacher-67c9c.firebasestorage.app",
+  messagingSenderId: "630070624320",
+  appId: "1:630070624320:web:0b87d56e0f7915b4b75fa5"
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const db = firebase.database();
+const notificationsRef = db.ref('notifications');
+
+notificationsRef.on('value', snapshot => {
+  const data = snapshot.val();
+  console.log('📡 Notifications:', data);
+});
+</script></script>
 </head>
 <body>
 
