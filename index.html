@@ -6159,23 +6159,20 @@ let notificationsRef = null;
   
 function initFirebase() {
   try {
-    // تحقق من تحميل Firebase بشكل أفضل
     if (!window.firebase) {
       console.log('⏳ Firebase still loading...');
       setTimeout(initFirebase, 500);
       return;
     }
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyD0LiDrxrn6pvSitZNI1Tc5iDPfx0yKDpg",
-  authDomain: "math-teacher-67c9c.firebaseapp.com",
-  databaseURL: "https://math-teacher-67c9c-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "math-teacher-67c9c",
-  storageBucket: "math-teacher-67c9c.firebasestorage.app",
-  messagingSenderId: "630070624320",
-  appId: "1:630070624320:web:0b87d56e0f7915b4b75fa5",
-  measurementId: "G-S2N310C5W5"
-};
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD0LiDrxrn6pvSitZNI1Tc5iDPfx0yKDpg",
+      authDomain: "math-teacher-67c9c.firebaseapp.com",
+      projectId: "math-teacher-67c9c",
+      storageBucket: "math-teacher-67c9c.firebasestorage.app",
+      messagingSenderId: "630070624320",
+      appId: "1:630070624320:web:0b87d56e0f7915b4b75fa5"
+    };
 
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
@@ -6184,7 +6181,6 @@ const firebaseConfig = {
     db = firebase.database();
     notificationsRef = db.ref('notifications');
 
-    // استمع للتحديثات الحية
     notificationsRef.on('value', snapshot => {
       try {
         const data = snapshot.val();
@@ -6196,14 +6192,13 @@ const firebaseConfig = {
         renderNotifList();
         updateNotifBadge();
       } catch(e) {
-        console.error('Error listening to Firebase:', e);
+        console.error('Error:', e);
       }
     });
 
     console.log('✅ Firebase initialized successfully');
   } catch(e) {
-    console.error('❌ Firebase initialization error:', e);
-    // أعد المحاولة
+    console.error('❌ Firebase error:', e);
     setTimeout(initFirebase, 1000);
   }
 }
